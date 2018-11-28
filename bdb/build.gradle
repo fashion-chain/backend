@@ -1,0 +1,41 @@
+
+buildscript {
+	dependencies { 
+		classpath "onight.osgi:zpp-gradle:3.0.0"
+	 }
+}
+version = '0.0.1'
+
+project.group='org.fok.core'
+
+apply plugin: 'zippo'
+
+protobuf {
+    generatedFilesBaseDir = "$projectDir/src"
+    generateProtoTasks {
+	  ofSourceSet('main')
+	}
+}
+sourceSets {
+  main {
+    proto {
+      srcDir '$projectDir/src/main/proto'
+    }
+    java {
+      srcDir '$projectDir/src/main/java'
+    }
+  }
+}
+
+dependencies { 
+	includeInJar "com.sleepycat:je:5.0.73"
+	compile ("org.fok:org.fok.tools:0.0.1")
+	compile ("org.fc.zippo:org.fc.zippo.oapi:3.3.2")
+	compile ("org.fok.core:org.fok.core.dbapi:0.0.1")
+}
+
+jar {
+	manifest{
+		attributes( 'Import-Ignore':'com.sleepycat')
+	}
+}
