@@ -105,14 +105,14 @@ public class BDBProvider<K, V> implements StoreServiceProvider, ActorService {
 
 	@Override
 	public String getProviderid() {
-		return "bc_bdb";
+		return "fok_db";
 	}
 
 	private List<String> tempDomainName = new ArrayList<String>();
 
 	@Override
 	public DomainDaoSupport getDaoByBeanName(DomainDaoSupport dds) {
-		ODBSupport dbi = dbsByDomains.get(dds.getDomainName());
+		ODBSupport<K, V> dbi = dbsByDomains.get(dds.getDomainName());
 		String dir = params.get("org.bc.obdb.dir", "odb." + Math.abs(NodeHelper.getCurrNodeListenOutPort() - 5100));
 		if (dbi == null) {
 			dbi = dbHelper.createDBI(dbsByDomains, dir, dds.getDomainName());

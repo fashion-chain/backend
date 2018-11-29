@@ -1,6 +1,6 @@
 package org.fok.core.db.bdb;
 
-import org.fok.core.model.Entity.SecondaryValue;
+import org.fok.core.dbmodel.Entity.SecondaryValue;
 
 import com.sleepycat.bind.tuple.TupleBinding;
 import com.sleepycat.bind.tuple.TupleInput;

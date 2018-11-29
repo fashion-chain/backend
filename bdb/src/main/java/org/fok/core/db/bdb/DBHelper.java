@@ -212,8 +212,8 @@ public class DBHelper<K, V> {
 		}
 	}
 
-	public ODBSupport createDBI(HashMap<String, ODBSupport<K, V>> dbsByDomains, String dir, String domainName) {
-		ODBSupport dbi = null;
+	public ODBSupport<K, V> createDBI(HashMap<String, ODBSupport<K, V>> dbsByDomains, String dir, String domainName) {
+		ODBSupport<K, V> dbi = null;
 		synchronized (dbsByDomains) {
 			dbi = dbsByDomains.get(domainName);
 			if (dbi == null) {
@@ -235,9 +235,9 @@ public class DBHelper<K, V> {
 					dbis[i] = createODBImpl(dir, domainName, i);
 				}
 				if (cc > 1) {
-					dbi = new SlicerOBDBImpl(domainName, dbis, exec);
+					dbi = (ODBSupport<K, V>) new SlicerOBDBImpl(domainName, dbis, exec);
 				} else {
-					dbi = dbis[0];
+					dbi = (ODBSupport<K, V>) dbis[0];
 				}
 				dbsByDomains.put(domainName, dbi);
 				// log.debug("inject dao::" + domainName);
