@@ -33,7 +33,7 @@ import onight.tfw.ojpa.api.ServiceSpec;
 
 @Slf4j
 @Data
-public class OBDBImpl implements ODBSupport<byte[], byte[]>, DomainDaoSupport {
+public class OBDBImpl implements ODBSupport, DomainDaoSupport {
 	String domainName = "";
 	private Database dbs;
 	private SecondaryDatabase sdb;

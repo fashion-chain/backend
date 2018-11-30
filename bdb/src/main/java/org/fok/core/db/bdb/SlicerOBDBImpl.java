@@ -21,7 +21,7 @@ import onight.tfw.ojpa.api.ServiceSpec;
 
 @Slf4j
 @Data
-public class SlicerOBDBImpl implements ODBSupport<byte[], byte[]>, DomainDaoSupport {
+public class SlicerOBDBImpl implements ODBSupport, DomainDaoSupport {
 	String domainName = "";
 
 	OBDBImpl odbs[];

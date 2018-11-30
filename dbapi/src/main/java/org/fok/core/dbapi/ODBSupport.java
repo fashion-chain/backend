@@ -13,7 +13,7 @@ import onight.tfw.ojpa.api.DomainDaoSupport;
  * @author brew
  *
  */
-public interface ODBSupport<K, V> extends DomainDaoSupport {
+public interface ODBSupport extends DomainDaoSupport {
 	/**
 	 * get value by key. if key not exists, this method will return null.
 	 * 
@@ -21,25 +21,25 @@ public interface ODBSupport<K, V> extends DomainDaoSupport {
 	 * @return
 	 * @throws ODBException
 	 */
-	Future<V> get(K key) throws ODBException;
+	Future<byte[]> get(byte[] key) throws ODBException;
 
-	Future<V[]> list(List<K> key) throws ODBException;
+	Future<byte[][]> list(List<byte[]> key) throws ODBException;
 
-	Future<BytesHashMap<byte[]>> listBySecondKey(K secondKey) throws ODBException;
+	Future<BytesHashMap<byte[]>> listBySecondKey(byte[] secondKey) throws ODBException;
 
-	Future<V> put(K key, V value) throws ODBException;
+	Future<byte[]> put(byte[] key, byte[] value) throws ODBException;
 
-	Future<V> put(K key, K secondaryKey, V value) throws ODBException;
+	Future<byte[]> put(byte[] key, byte[] secondaryKey, byte[] value) throws ODBException;
 
-	Future<V[]> batchPuts(List<K> key, List<V> value) throws ODBException;
+	Future<byte[][]> batchPuts(List<byte[]> key, List<byte[]> value) throws ODBException;
 
-	Future<V> putIfNotExist(K key, V value) throws ODBException;
+	Future<byte[]> putIfNotExist(byte[] key, byte[] value) throws ODBException;
 
-	Future<V> delete(K key) throws ODBException;
+	Future<byte[]> delete(byte[] key) throws ODBException;
 
-	Future<V[]> batchDelete(List<K> key) throws ODBException;
+	Future<byte[][]> batchDelete(List<byte[]> key) throws ODBException;
 
-	Future<BytesHashMap<byte[]>> deleteBySecondKey(K secondKey, List<K> keys) throws ODBException;
+	Future<BytesHashMap<byte[]>> deleteBySecondKey(byte[] secondKey, List<byte[]> keys) throws ODBException;
 
 	void sync() throws ODBException;
 }

@@ -28,7 +28,7 @@ import onight.tfw.outils.conf.PropHelper;
 
 @Slf4j
 @AllArgsConstructor
-public class DBHelper<K, V> {
+public class DBHelper {
 	PropHelper params;
 
 	ScheduledExecutorService exec;
@@ -39,7 +39,7 @@ public class DBHelper<K, V> {
 			File networkFile = new File(".chainnet");
 			if (!networkFile.exists() || !networkFile.canRead()) {
 				// read default config
-				network = this.params.get("org.bc.manage.node.net", null);
+				network = this.params.get("org.fok.core.environment.net", "testnet");
 			}
 			if (network == null || network.isEmpty()) {
 				while (!networkFile.exists() || !networkFile.canRead()) {
@@ -147,8 +147,8 @@ public class DBHelper<K, V> {
 		envConfig.setConfigParam(EnvironmentConfig.NODE_MAX_ENTRIES,
 				params.get("org.brewchain.backend.bdb.je.node.max.entries", "8129"));
 
-		envConfig.setConfigParam(EnvironmentConfig.FILE_LOGGING_LEVEL,
-				params.get("org.brewchain.backend.bdb.je.file.logging.level", "error"));
+//		envConfig.setConfigParam(EnvironmentConfig.FILE_LOGGING_LEVEL,
+//				params.get("org.brewchain.backend.bdb.je.file.logging.level", "error"));
 
 		log.info(">> dbHomeFile" + dbHomeFile);
 
@@ -212,8 +212,8 @@ public class DBHelper<K, V> {
 		}
 	}
 
-	public ODBSupport<K, V> createDBI(HashMap<String, ODBSupport<K, V>> dbsByDomains, String dir, String domainName) {
-		ODBSupport<K, V> dbi = null;
+	public ODBSupport createDBI(HashMap<String, ODBSupport> dbsByDomains, String dir, String domainName) {
+		ODBSupport dbi = null;
 		synchronized (dbsByDomains) {
 			dbi = dbsByDomains.get(domainName);
 			if (dbi == null) {
@@ -235,9 +235,9 @@ public class DBHelper<K, V> {
 					dbis[i] = createODBImpl(dir, domainName, i);
 				}
 				if (cc > 1) {
-					dbi = (ODBSupport<K, V>) new SlicerOBDBImpl(domainName, dbis, exec);
+					dbi = (ODBSupport) new SlicerOBDBImpl(domainName, dbis, exec);
 				} else {
-					dbi = (ODBSupport<K, V>) dbis[0];
+					dbi = (ODBSupport) dbis[0];
 				}
 				dbsByDomains.put(domainName, dbi);
 				// log.debug("inject dao::" + domainName);

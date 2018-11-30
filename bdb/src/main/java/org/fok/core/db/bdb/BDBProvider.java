@@ -26,21 +26,21 @@ import onight.tfw.ojpa.api.StoreServiceProvider;
 import onight.tfw.outils.conf.PropHelper;
 
 @Component(publicFactory = false)
-@Instantiate(name = "bdb_provider")
+@Instantiate(name = "fok_db_provider")
 @Provides(specifications = { StoreServiceProvider.class, ActorService.class }, strategy = "SINGLETON")
 @Slf4j
 @Data
-public class BDBProvider<K, V> implements StoreServiceProvider, ActorService {
+public class BDBProvider implements StoreServiceProvider, ActorService {
 
 	@ServiceProperty(name = "name")
-	String name = "bdb_provider";
+	String name = "fok_db_provider";
 
 	BundleContext bundleContext;
 	public static final String defaultEnvironmentFolder = "appdb";
 	@Setter
 	@Getter
 	String rootPath = "fbs";
-	private HashMap<String, ODBSupport<K, V>> dbsByDomains = new HashMap<>();
+	private HashMap<String, ODBSupport> dbsByDomains = new HashMap<>();
 
 	public BDBProvider(BundleContext bundleContext) {
 		this.bundleContext = bundleContext;
@@ -58,7 +58,7 @@ public class BDBProvider<K, V> implements StoreServiceProvider, ActorService {
 	@Validate
 	public void startup() {
 		try {
-			new Thread(new DBStartThread()).start();
+			new Thread(new DBStartThread()).start();	
 		} catch (Throwable t) {
 			log.error("init bc bdb failed", t);
 		}
@@ -112,7 +112,7 @@ public class BDBProvider<K, V> implements StoreServiceProvider, ActorService {
 
 	@Override
 	public DomainDaoSupport getDaoByBeanName(DomainDaoSupport dds) {
-		ODBSupport<K, V> dbi = dbsByDomains.get(dds.getDomainName());
+		ODBSupport dbi = dbsByDomains.get(dds.getDomainName());
 		String dir = params.get("org.bc.obdb.dir", "odb." + Math.abs(NodeHelper.getCurrNodeListenOutPort() - 5100));
 		if (dbi == null) {
 			dbi = dbHelper.createDBI(dbsByDomains, dir, dds.getDomainName());

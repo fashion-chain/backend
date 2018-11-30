@@ -10,10 +10,10 @@ import onight.tfw.ojpa.api.DomainDaoSupport;
 import onight.tfw.ojpa.api.ServiceSpec;
 
 @Data
-public class ODBDao<K, V> implements ODBSupport<K, V> {
+public class ODBDao implements ODBSupport {
 
 	protected ServiceSpec serviceSpec;
-	protected ODBSupport<K, V> daosupport;
+	protected ODBSupport daosupport;
 	protected String domainName;
 
 	public ODBDao(ServiceSpec serviceSpec) {
@@ -29,56 +29,56 @@ public class ODBDao<K, V> implements ODBSupport<K, V> {
 
 	@Override
 	public void setDaosupport(DomainDaoSupport dds) {
-		this.daosupport = (ODBSupport<K, V>) dds;
+		this.daosupport = (ODBSupport) dds;
 	}
 
 	@Override
-	public Future<V> get(K key) throws ODBException {
+	public Future<byte[]> get(byte[] key) throws ODBException {
 		return daosupport.get(key);
 	}
 
 	@Override
-	public Future<V[]> list(List<K> key) throws ODBException {
+	public Future<byte[][]> list(List<byte[]> key) throws ODBException {
 		return daosupport.list(key);
 	}
 
 	@Override
-	public Future<BytesHashMap<byte[]>> listBySecondKey(K secondKey) throws ODBException {
+	public Future<BytesHashMap<byte[]>> listBySecondKey(byte[] secondKey) throws ODBException {
 		return daosupport.listBySecondKey(secondKey);
 	}
 
 	@Override
-	public Future<V> put(K key, V value) throws ODBException {
+	public Future<byte[]> put(byte[] key, byte[] value) throws ODBException {
 		return daosupport.put(key, value);
 	}
 
 	@Override
-	public Future<V> put(K key, K secondaryKey, V value) throws ODBException {
+	public Future<byte[]> put(byte[] key, byte[] secondaryKey, byte[] value) throws ODBException {
 		return daosupport.put(key, secondaryKey, value);
 	}
 
 	@Override
-	public Future<V[]> batchPuts(List<K> key, List<V> value) throws ODBException {
+	public Future<byte[][]> batchPuts(List<byte[]> key, List<byte[]> value) throws ODBException {
 		return daosupport.batchPuts(key, value);
 	}
 
 	@Override
-	public Future<V> putIfNotExist(K key, V value) throws ODBException {
+	public Future<byte[]> putIfNotExist(byte[] key, byte[] value) throws ODBException {
 		return daosupport.putIfNotExist(key, value);
 	}
 
 	@Override
-	public Future<V> delete(K key) throws ODBException {
+	public Future<byte[]> delete(byte[] key) throws ODBException {
 		return daosupport.delete(key);
 	}
 
 	@Override
-	public Future<V[]> batchDelete(List<K> key) throws ODBException {
+	public Future<byte[][]> batchDelete(List<byte[]> key) throws ODBException {
 		return daosupport.batchDelete(key);
 	}
 
 	@Override
-	public Future<BytesHashMap<byte[]>> deleteBySecondKey(K secondKey, List<K> keys) throws ODBException {
+	public Future<BytesHashMap<byte[]>> deleteBySecondKey(byte[] secondKey, List<byte[]> keys) throws ODBException {
 		return daosupport.deleteBySecondKey(secondKey, keys);
 	}
 
