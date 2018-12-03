@@ -227,7 +227,8 @@ public class OBDBImpl implements ODBSupport, DomainDaoSupport {
 				BytesHashMap<byte[]> ret = new BytesHashMap<>();
 
 				while (retVal == OperationStatus.SUCCESS) {
-					ret.put(foundKey.getData(), foundData.getData());
+					SecondaryValue sv = SecondaryValue.parseFrom(foundData.getData());
+					ret.put(foundKey.getData(), sv.getData().toByteArray());
 					retVal = mySecCursor.getNextDup(secondaryKey, foundKey, foundData, LockMode.DEFAULT);
 				}
 

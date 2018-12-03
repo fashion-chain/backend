@@ -6,6 +6,9 @@ import com.sleepycat.bind.tuple.TupleBinding;
 import com.sleepycat.bind.tuple.TupleInput;
 import com.sleepycat.bind.tuple.TupleOutput;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ODBTupleBinding extends TupleBinding<SecondaryValue> {
 
 	@Override
@@ -13,8 +16,9 @@ public class ODBTupleBinding extends TupleBinding<SecondaryValue> {
 		byte bb[] = new byte[input.available()];
 		input.read(bb);
 		try {
-			return SecondaryValue.parseDelimitedFrom(input);
+			return SecondaryValue.parseFrom(bb);
 		} catch (Exception e) {
+			log.error("", e);
 			return null;
 		}
 	}

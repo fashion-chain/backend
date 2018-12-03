@@ -8,7 +8,9 @@ import com.sleepycat.je.SecondaryDatabase;
 import com.sleepycat.je.SecondaryKeyCreator;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @AllArgsConstructor
 public class ODBSecondKeyCreator implements SecondaryKeyCreator {
 	private TupleBinding<SecondaryValue> binding;
@@ -20,8 +22,10 @@ public class ODBSecondKeyCreator implements SecondaryKeyCreator {
 			SecondaryValue v = binding.entryToObject(data);
 			if (v.getSecondaryKey() != null && !v.getSecondaryKey().isEmpty()) {
 				result.setData(v.getSecondaryKey().toByteArray());
+				return true;
 			}
 		} catch (Exception e) {
+			log.error("", e);
 		}
 		return false;
 	}
