@@ -9,9 +9,9 @@ import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.lang3.concurrent.ConcurrentUtils;
+import org.fok.core.db.bdb.model.Entity.SecondaryValue;
 import org.fok.core.dbapi.ODBException;
 import org.fok.core.dbapi.ODBSupport;
-import org.fok.core.dbmodel.Entity.SecondaryValue;
 import org.fok.tools.bytes.BytesComparisons;
 import org.fok.tools.bytes.BytesHashMap;
 

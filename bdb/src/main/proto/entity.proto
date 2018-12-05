@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package org.fok.core.dbmodel;
+package org.fok.core.db.bdb.model;
 
 message SecondaryValue {
 	bytes data = 1;
